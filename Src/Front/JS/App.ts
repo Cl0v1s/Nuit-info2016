@@ -2,85 +2,19 @@ class App
 {
     public static Debug : boolean = true;
 
-    public static EndPoint : string = "http://172.17.0.2/rest/api";
-    public static Token : string = "5e33c6d1ec779b9210e9cdad";
-    //public static Token : string = "1466c749fd54c9e648ad57a6";
 
+    public static EndPoint : string = "http://172.17.0.2/rest/api";
 
     public static Main()
     {
-        View.RootID = "Content";
-
-        /**
-         * Affiche l'ensemble des articles présents dans le site
-         */
-        let showArticles : Function = function(){
-            Model.RetrieveArticles(() => {
-                new ArticlesView().Show();
-            });
-        };
-
-        /**
-         * Affiche l'ensemble des replays disponibles
-         */
-        let showReplays : Function = function(){
-            Model.RetrieveReplays(() => {
-                new ReplaysView().Show();
-            });
-        };
-
-        /**
-         * Affiche un article en particulier (premier élément du tableau params)
-         */
-        let showArticle : Function = function(params)
-        {
-            Model.RetrieveArticles(() => {
-                new ArticleFocusView(Model.GetArticle(params[0])).Show();
-            });
-        };
-
-        /**
-         * Affiche le message erreur 500
-         */
-        let showError500 : Function = function()
-        {
-            new Error500View().Show();
-        }
-
-        /**
-         * Affiche le message erreur 400
-         */
-        let showError404 : Function = function()
-        {
-            new Error404View().Show();
-        }
-
-        /**
-         * Affiche la page d'index
-         */
-        let showHome : Function = function()
-        {
-            Model.RetrieveArticles(() => {
-                Model.RetrieveReplays(() => {
-                    new IndexView().Show();
-                });
-            });
-        }
-
 
         // Création des liens et des actions associées
-        Linker.GetInstance().AddLink("articles", showArticles);
-        Linker.GetInstance().AddLink("replays", showReplays);
-        Linker.GetInstance().AddLink("article", showArticle);
-        Linker.GetInstance().AddLink("index", showHome);
-        Linker.GetInstance().AddLink(Link_Special.Error_404, showError404);
-        Linker.GetInstance().AddLink(Link_Special.Error_500, showError500);
+        /*
         Linker.GetInstance().AddLink(Link_Special.Default, showHome);
+        */
 
 
-        Locale.CreateInstance(() => { // Chargement de la langue 
-            Linker.GetInstance().Analyze(); // Une fois qu'on a chargé la langue on analise l'URL
-        });
+        Linker.GetInstance().Analyze(); // Une fois qu'on a chargé la langue on analise l'URL
     }
 
     public static Error(e : Error) : void
@@ -101,6 +35,7 @@ class App
     {
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
+            // TODO: récupérer le cookie session_id
             callback(xhttp.responseText.trim());
         };
         xhttp.onerror = function()
@@ -108,7 +43,8 @@ class App
             if(error != null)
                 error();
         }
-        xhttp.open("GET", url + "?token="+App.Token, true);
+        // TODO: ajouter le cookie session_id 
+        xhttp.open("GET", url, true);
         console.log("Processing "+url);
         xhttp.send();
 
