@@ -8,5 +8,5 @@ Ce repo contient le code produit par l'équipe "char ibout;" à l'occasion de la
 - [ ] [GJN: Gamifier son projet de la nuit de l'info](http://www.nuitdelinfo.com/n2i/defis/120)
 - [ ] [Mascotte/Logo](http://www.nuitdelinfo.com/n2i/defis/83)
 - [ ] [Le jour où le mobile dépassa le desktop](http://www.nuitdelinfo.com/n2i/defis/99)
-- [ ] ????
+- [ ] [It's in the game](http://www.nuitdelinfo.com/n2i/defis/105)
 
