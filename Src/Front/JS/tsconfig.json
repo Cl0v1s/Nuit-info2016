@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+            "target": "es6",
+            "sourceMap": true,
+            "outFile": "./../Build/main.js"
+    },
+    "files": 
+    [
+        "Model/Model.ts",
+        "Model/Article.ts",
+        "Model/Replay.ts",
+        "Components/Component.ts", 
+        "Components/ArticleComponent.ts", 
+        "Components/ArticleFocusComponent.ts", 
+        "Components/DisqusComponent.ts", 
+        "Components/ReplayComponent.ts", 
+        "Components/MessageComponent.ts", 
+        "Components/TitleComponent.ts", 
+        "Components/LastsArticlesComponent.ts", 
+        "Components/LastsReplaysComponent.ts", 
+        "Views/View.ts",
+        "Views/ArticlesView.ts",
+        "Views/ArticleFocusView.ts",
+        "Views/ReplaysView.ts",
+        "Views/IndexView.ts",
+        "Views/Error500View.ts",
+        "Views/Error404View.ts",
+        "Locales/Locale.ts",
+        "Link.ts",
+        "App.ts"
+    ]
+
+    
+}
