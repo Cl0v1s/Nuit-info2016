@@ -1,0 +1,126 @@
+/***************************
+**     FEUILLE DE STYLE   **
+**         GENERALE       **
+**   NUIT DE L'INFO 2k16  **
+**        Char ibou;      **
+***************************/
+
+/**
+Je reste sur le chan pour voir du coup
+JE te donne les codes
+ibidic
+x)
+f56233
+ffefe5
+( 1b1d1c )
+**/
+
+html {
+  background-color: #1b1d1c;
+  font-family: 'Oswald', sans-serif;
+  color: #ffefe5;
+  font-size: 2em;
+}
+body {
+  margin: 0;
+}
+
+p {
+
+}
+
+
+/* Connexion */
+
+.home {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
+/* Champ de saisie - Connexion */
+
+.txtarea {
+  box-sizing: padding-box;
+  border: none;
+  font-size:1em;
+  background-color: #343835;
+  color: #ffefe5;
+  veritical-align: middle;
+  margin-top: 1em;
+  font-family: 'Oswald', sans-serif;
+  padding-left: 0.5em;
+}
+
+input[type="checkbox"] {
+      transform:scale(2.25, 2.25);
+      font-size: 1em;
+      color: #ffefe5;
+      padding-righ: 0.2em;
+    }
+
+.connexion_area {
+  outline: solid 0.2em #f56233;
+  width: 100%;
+  line-height: 2em;
+  margin-bottom: 0.5em;
+}
+
+button {
+  width: 40%;
+  line-height: 2em;
+  font-size: 1.25em;
+  background-color: #f56233;
+  font-family: 'Oswald', sans-serif;
+  border-style: outset;
+  border-width: 0.1em;
+}
+
+button:disabled {
+  color: #f56233;
+  background-color: #1b1d1c;
+  outline: none;
+  border: none;
+}
+
+.centerer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.submit-btn {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin-top: 1.5em;
+}
+
+.menu_open {
+  background-color: black;
+  width: 50%;
+}
+
+.menu_close {
+  overflow: hidden;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+#hamburger p{
+  display: block;
+  margin: 0px auto;
+  line-height: 1.5em;
+  vertical-align: middle;
+}
+
+.menu ul {
+  padding: 5px;
+  margin: 0px 5px;
+  list-style: none;
+}
+
+.menu ul li{
+  border-top: 1px solid #f56233;
+}
