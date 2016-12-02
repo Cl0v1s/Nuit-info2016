@@ -8,6 +8,7 @@ class CardComponent extends Component
             body: "\
                 <div>\
                     <input type='button' value='up' name='up'>\
+                    <span>{{vote}}</span>\
                     <input type='button' value='down'name='down'>\
                 </div>\
                 <div>\
@@ -16,7 +17,6 @@ class CardComponent extends Component
                 <div>\
                     {{content}}\
                 </div>\
-                <input type='button' value='Read more' name='read-more'>\
             ",
         });
         this.card = card;
@@ -24,16 +24,34 @@ class CardComponent extends Component
 
     public Up() : void
     {
-        console.log("up");
         
-        Model.GetInstance().voteCard(this.card, true, null);
+        Model.GetInstance().voteCard(this.card, true, (data) => {
+            data = JSON.parse(data);
+            if(data.code == 200)
+            {
+                new CardsView().Show();
+            }
+            else 
+            {
+                alert("An error occured.");
+            }
+        });
     }
 
     public Down() : void
     {
-        console.log("down");
         
-        Model.GetInstance().voteCard(this.card, false, null);
+        Model.GetInstance().voteCard(this.card, false, (data) => {
+            data = JSON.parse(data);
+            if(data.code == 200)
+            {
+                new CardsView().Show();
+            }
+            else 
+            {
+                alert("An error occured.");
+            }
+        });
     }
 
     public ReadMore() : void
@@ -45,12 +63,12 @@ class CardComponent extends Component
     public Mount(parent : Component)
     {
         let opts : any = {
-            title : this.card.Title, 
-            content : this.card.Description
+            title : this.card.Title(), 
+            content : this.card.Description(), 
+            vote : this.card.Value()
         };
         super.Mount(parent, opts);
         this.GetDOM().querySelector("input[name='up']").addEventListener("click", () => { this.Up()});
         this.GetDOM().querySelector("input[name='down']").addEventListener("click", () => { this.Down()});
-        this.GetDOM().querySelector("input[name='read-more']").addEventListener("click", () => { this.ReadMore()});
     }
 }

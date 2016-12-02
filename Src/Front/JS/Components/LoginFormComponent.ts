@@ -4,6 +4,7 @@ class LoginFormComponent extends Component
     {
         super({
             body : "\
+                <img src='Assets/Logo.png'>\
                 <input type='text' name='username' placeholder='Username'>\
                 <input type='password' name='password' placeholder='Password'>\
                 <input type='button' value='Login' name='submit'>\

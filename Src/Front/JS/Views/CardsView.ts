@@ -33,13 +33,18 @@ class CardsView extends View
         });
         this.Add(this.cardsList).Mount(base, null);
 
-        let cards : Array<Card> = Model.GetInstance().Cards().slice(this.index, this.index + this.length);
-        cards.forEach((card) => {
-            this.Add(new CardComponent(card)).Mount(this.cardsList);
-        });
+        let self : CardsView = this;
+        let callback : Function = function()
+        {
+            let cards : Array<Card> = Model.GetInstance().Cards().slice(self.index, self.index + self.length);
+            cards.forEach((card) => {
+                self.Add(new CardComponent(card)).Mount(self.cardsList);
+            });
 
-        this.Add(new ButtonComponent("Load More Cards", () => {
-            this.LoadMore();
-        })).Mount(base);
+            self.Add(new ButtonComponent("Load More Cards", () => {
+                self.LoadMore();
+            })).Mount(base);
+        }
+        Model.GetInstance().retrieveCards(callback);
     }
 }

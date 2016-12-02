@@ -13,6 +13,7 @@ class MenuComponent extends Component
                 <div>\
                     <input type='button' value='Cards' name='cards'>\
                     <input type='button' value='Add a Card' name='add-card'>\
+                    <input type='button' value='404' name='404'>\
                 </div>\
             "
         });
@@ -37,6 +38,11 @@ class MenuComponent extends Component
         new AddCardView().Show();
     }
 
+    public E404() : void
+    {
+        window.location.href = "404.html";
+    }
+
     public Mount(parent : Component)
     {
         super.Mount(parent, null);
@@ -44,6 +50,7 @@ class MenuComponent extends Component
         this.GetDOM().querySelector("input[name='menu']").addEventListener("click", () => {this.Open();} );        
         this.GetDOM().querySelector("input[name='cards']").addEventListener("click", () => {this.Cards();} );
         this.GetDOM().querySelector("input[name='add-card']").addEventListener("click", () => {this.AddCard();} );
+        this.GetDOM().querySelector("input[name='404']").addEventListener("click", () => {this.E404();} );
 
     }
 }

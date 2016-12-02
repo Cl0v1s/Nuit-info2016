@@ -57,9 +57,25 @@ class Model
     /**
      * Récupère lengths cartes à partir de l'id précisé
      */
-    public retrieveCards(startid : number, length : number, callback : Function) : void
+    public retrieveCards(callback : Function) : void
     {
-
+        Model.GetInstance().cards = new Array<Card>();
+        App.Get("getCards.php?", (data) => {
+            data = JSON.parse(data);
+            if(data.code == 200)
+            {
+                data.content.forEach((card) => {
+                    let c : Card = new Card(card);
+                    Model.GetInstance().cards.push(c);
+                });
+                callback();
+            }
+            else 
+            {
+                alert("An Error occured.");
+                return;
+            }
+        }, App.Error);
     }
 
     /**
@@ -91,7 +107,10 @@ class Model
      */
     public voteCard(card :Card, upvote : boolean, callback : Function) : void
     {
-
+        let vote = "true";
+        if(upvote == false)
+            vote = "false";
+        App.Get("voteCard.php?cardId="+card.Id()+"&vote="+vote, callback, App.Error);
     }
 
     /**

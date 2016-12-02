@@ -10,7 +10,7 @@ class Card
 
     constructor(data : any)
     {
-        this.id = data.id;
+        this.id = data.id_card;
         this.title = data.title;
         this.description = data.description;
         this.value = data.value;

@@ -1,6 +1,6 @@
 class Card {
     constructor(data) {
-        this.id = data.id;
+        this.id = data.id_card;
         this.title = data.title;
         this.description = data.description;
         this.value = data.value;
@@ -115,7 +115,22 @@ class Model {
     /**
      * Récupère lengths cartes à partir de l'id précisé
      */
-    retrieveCards(startid, length, callback) {
+    retrieveCards(callback) {
+        Model.GetInstance().cards = new Array();
+        App.Get("getCards.php?", (data) => {
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                data.content.forEach((card) => {
+                    let c = new Card(card);
+                    Model.GetInstance().cards.push(c);
+                });
+                callback();
+            }
+            else {
+                alert("An Error occured.");
+                return;
+            }
+        }, App.Error);
     }
     /**
      * Récupère les informations sur une carte en particulier
@@ -138,6 +153,10 @@ class Model {
      * Permet de voter pour une carte
      */
     voteCard(card, upvote, callback) {
+        let vote = "true";
+        if (upvote == false)
+            vote = "false";
+        App.Get("voteCard.php?cardId=" + card.Id() + "&vote=" + vote, callback, App.Error);
     }
     /**
      * Récupère un sticker depuis le serveur
@@ -347,6 +366,7 @@ class MenuComponent extends Component {
                 <div>\
                     <input type='button' value='Cards' name='cards'>\
                     <input type='button' value='Add a Card' name='add-card'>\
+                    <input type='button' value='404' name='404'>\
                 </div>\
             "
         });
@@ -365,12 +385,16 @@ class MenuComponent extends Component {
     AddCard() {
         new AddCardView().Show();
     }
+    E404() {
+        window.location.href = "404.html";
+    }
     Mount(parent) {
         super.Mount(parent, null);
         this.origin = this.GetDOM().className;
         this.GetDOM().querySelector("input[name='menu']").addEventListener("click", () => { this.Open(); });
         this.GetDOM().querySelector("input[name='cards']").addEventListener("click", () => { this.Cards(); });
         this.GetDOM().querySelector("input[name='add-card']").addEventListener("click", () => { this.AddCard(); });
+        this.GetDOM().querySelector("input[name='404']").addEventListener("click", () => { this.E404(); });
     }
 }
 class StickerComponent extends Component {
@@ -401,6 +425,7 @@ class LoginFormComponent extends Component {
     constructor() {
         super({
             body: "\
+                <img src='Assets/Logo.png'>\
                 <input type='text' name='username' placeholder='Username'>\
                 <input type='password' name='password' placeholder='Password'>\
                 <input type='button' value='Login' name='submit'>\
@@ -442,6 +467,7 @@ class CardComponent extends Component {
             body: "\
                 <div>\
                     <input type='button' value='up' name='up'>\
+                    <span>{{vote}}</span>\
                     <input type='button' value='down'name='down'>\
                 </div>\
                 <div>\
@@ -450,18 +476,31 @@ class CardComponent extends Component {
                 <div>\
                     {{content}}\
                 </div>\
-                <input type='button' value='Read more' name='read-more'>\
             ",
         });
         this.card = card;
     }
     Up() {
-        console.log("up");
-        Model.GetInstance().voteCard(this.card, true, null);
+        Model.GetInstance().voteCard(this.card, true, (data) => {
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                new CardsView().Show();
+            }
+            else {
+                alert("An error occured.");
+            }
+        });
     }
     Down() {
-        console.log("down");
-        Model.GetInstance().voteCard(this.card, false, null);
+        Model.GetInstance().voteCard(this.card, false, (data) => {
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                new CardsView().Show();
+            }
+            else {
+                alert("An error occured.");
+            }
+        });
     }
     ReadMore() {
         //TODO: expand (add class css)
@@ -469,13 +508,13 @@ class CardComponent extends Component {
     }
     Mount(parent) {
         let opts = {
-            title: this.card.Title,
-            content: this.card.Description
+            title: this.card.Title(),
+            content: this.card.Description(),
+            vote: this.card.Value()
         };
         super.Mount(parent, opts);
         this.GetDOM().querySelector("input[name='up']").addEventListener("click", () => { this.Up(); });
         this.GetDOM().querySelector("input[name='down']").addEventListener("click", () => { this.Down(); });
-        this.GetDOM().querySelector("input[name='read-more']").addEventListener("click", () => { this.ReadMore(); });
     }
 }
 /**
@@ -524,10 +563,6 @@ class LoginView extends View {
             body: "", classes: "LoginView"
         });
         this.Add(base).Mount(null, null);
-        this.Add(new ButtonComponent("Login", null)).Mount(base);
-        this.Add(new ButtonComponent("Register", () => {
-            App.GoTo("register");
-        })).Mount(base);
         this.Add(new LoginFormComponent()).Mount(base);
     }
 }
@@ -571,13 +606,17 @@ class CardsView extends View {
             body: ""
         });
         this.Add(this.cardsList).Mount(base, null);
-        let cards = Model.GetInstance().Cards().slice(this.index, this.index + this.length);
-        cards.forEach((card) => {
-            this.Add(new CardComponent(card)).Mount(this.cardsList);
-        });
-        this.Add(new ButtonComponent("Load More Cards", () => {
-            this.LoadMore();
-        })).Mount(base);
+        let self = this;
+        let callback = function () {
+            let cards = Model.GetInstance().Cards().slice(self.index, self.index + self.length);
+            cards.forEach((card) => {
+                self.Add(new CardComponent(card)).Mount(self.cardsList);
+            });
+            self.Add(new ButtonComponent("Load More Cards", () => {
+                self.LoadMore();
+            })).Mount(base);
+        };
+        Model.GetInstance().retrieveCards(callback);
     }
 }
 class AddCardView extends View {
