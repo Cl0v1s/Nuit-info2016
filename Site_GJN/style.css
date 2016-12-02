@@ -1,0 +1,55 @@
+/*
+e88565
+ffefe5
+( 1b1d1c )
+f56233
+*/
+
+body {
+  background-color: #1b1d1c;
+  font-family: 'Oswald', sans-serif;
+  color: #ffefe5;
+  font-size: 1.3em;
+}
+
+h1, h2, h3 {
+  color: #f56233;
+  text-align: center;
+}
+
+p {
+  text-align: justify;
+}
+
+.wrapper {
+  margin-left: 10%;
+  width: 80%;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+b {
+  color: #f56233;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.container{
+  background-color: #1b1d1c;
+  font-family: 'Oswald', sans-serif;
+  color: #ffefe5;
+  font-size: 1.3em;
+}
+
+.jumbotron{
+  background-color: #1b1d1c;
+  font-family: 'Oswald', sans-serif;
+  color: #ffefe5;
+  font-size: 1.3em;
+}
