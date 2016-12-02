@@ -24,7 +24,8 @@ while ($row = $query->fetch()) {
         "title" => $row["title"],
         "date" => $row["date"],
         "priority" => $row["priority"],
-        "value" => $row["value"]
+        "value" => $row["value"],
+        "user_id" => $row["user_id"]
     );
 }
 
