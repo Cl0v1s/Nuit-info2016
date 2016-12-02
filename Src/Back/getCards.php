@@ -26,9 +26,25 @@ while ($row = $query->fetch()) {
         "description" => $row["description"],
         "title" => $row["title"],
         "date" => $row["date"],
-        "priority" => $row["priority"]
+        "priority" => $row["priority"],
+        "value" => $row["value"]
     );
 }
+
+function usortTest($a, $b) {
+    $date = new DateTime();
+    $date2 = new DateTime($a["date"]);
+    $interval = $date->diff($date2);
+    $ecartA = $interval->format('%a');
+
+    $date2 = new DateTime($b["date"]);
+    $interval = $date->diff($date2);
+    $ecartB = $interval->format('%a');
+
+    return 10 - ( $a["priority"] * ($ecartA -$ecartB) + $a["value"]);
+}
+
+usort($cards, "usortTest");
 
 $result["code"] = 200;
 $result["content"] = $cards;
