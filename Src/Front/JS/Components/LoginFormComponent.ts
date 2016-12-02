@@ -7,7 +7,7 @@ class LoginFormComponent extends Component
                 <input type='text' name='username' placeholder='Username'>\
                 <input type='password' name='password' placeholder='Password'>\
                 <input type='button' value='Login' name='submit'>\
-            " 
+            "
         });
     }
 

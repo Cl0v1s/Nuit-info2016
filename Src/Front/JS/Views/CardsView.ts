@@ -21,7 +21,7 @@ class CardsView extends View
         super.Show();
 
         let base : Component = new Component({
-            body : ""
+            body : "", classes : "CardsView"
         });
         this.Add(base).Mount(null, null);
 

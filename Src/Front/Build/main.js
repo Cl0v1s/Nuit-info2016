@@ -110,6 +110,7 @@ class Model {
      * Permet a un utilisateur de  créer une compte sur la plateforme
      */
     register(username, password, callback) {
+        App.Get("register.php?username=" + username + "&pwd=" + password, callback, App.Error);
     }
     /**
      * Récupère lengths cartes à partir de l'id précisé
@@ -282,6 +283,16 @@ class RegisterFormComponent extends Component {
             return;
         }
         console.log(username + ":" + password);
+        Model.GetInstance().register(username, password, (data) => {
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                App.Token = username + ":" + password;
+                App.GoTo("cards");
+            }
+            else {
+                alert("An error occured, please retry.");
+            }
+        });
         //TODO: envoyer le formulaire 
     }
     Mount(parent) {
@@ -481,7 +492,7 @@ class LoginView extends View {
     Show() {
         super.Show();
         let base = new Component({
-            body: ""
+            body: "", classes: "LoginView"
         });
         this.Add(base).Mount(null, null);
         this.Add(new ButtonComponent("Login", null)).Mount(base);
@@ -522,7 +533,7 @@ class CardsView extends View {
     Show() {
         super.Show();
         let base = new Component({
-            body: ""
+            body: "", classes: "CardsView"
         });
         this.Add(base).Mount(null, null);
         this.Add(new MenuComponent()).Mount(base);

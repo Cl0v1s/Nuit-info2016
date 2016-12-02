@@ -6,7 +6,7 @@ class LoginView extends View
         super.Show();
 
         let base : Component = new Component({
-            body : ""
+            body : "", classes : "LoginView"
         });
         this.Add(base).Mount(null, null);
 
