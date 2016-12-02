@@ -16,15 +16,15 @@ $query = $pdo->prepare($sql);
 $query->bindValue (':username', $username);
 $query->bindValue(":password", $password);
 $ret = $query->execute();
+$row = $query->fetch();
 
-if ($ret != 0 ) {
+if ($row == false) {
     $result["code"] = 401;
     $result["content"] = "Bad credentials";
     echo json_encode($result);
     exit(1);
 }
 
-$row = $query->fetch();
 $idUser = $row["id_user"];
 
 $result["code"] = 200;
