@@ -1,0 +1,98 @@
+//Young     Create your profiles
+if(user[creationDate] >= time()){
+  return true;
+}else{
+  return false;
+}
+
+//Member    One moth on app
+if(user[creationDate] + (30*24*60*60) >= time()){
+  return true;
+}else{
+  return false;
+}
+
+//Elder     6 moths on app
+if(user[creationDate] + (6*30*24*60*60) >= time()){
+  return true;
+}else{
+  return false;
+}
+
+//Wise      One year on app
+if(user[creationDate] + (12*30*24*60*60) >= time()){
+  return true;
+}else{
+  return false;
+}
+
+//Beginner  Post a topic
+if(user[nbPost] >= 1){
+  return true;
+}else{
+  return false;
+}
+
+//Involved  Post 10 topics
+if(user[nbPost] >= 10){
+  return true;
+}else{
+  return false;
+}
+//Expert    Post 50 topics
+if(user[nbPost] >= 50){
+  return true;
+}else{
+  return false;
+}
+//Senior    Post 100 topics
+if(user[nbPost] >= 100){
+  return true;
+}else{
+  return false;
+}
+
+//Voter     Vote a topic 10 times
+if(user[nbVote] >= 10){
+  return true;
+}else{
+  return false;
+}
+//Elector   Vote a topic 50 times
+if(user[nbVote] >= 50){
+  return true;
+}else{
+  return false;
+}
+
+//Smart     One of yours topics have 5 up-vote
+if(user[maxUpVote] >= 5){
+  return true;
+}else{
+  return false;
+}
+//Smarter   Five of yours topics have 10 up-vote
+if(user[maxUpVote] >= 20){
+  return true;
+}else{
+  return false;
+}
+//Genius    One of yours topics have more than 75 up-vote
+if(user[maxUpVote] >= 75){
+  return true;
+}else{
+  return false;
+}
+
+//Collector Have 5 badges
+if(user[nbBadge] >= 5){
+  return true;
+}else{
+  return false;
+}
+//Elite     Have all badges
+if(user[nbBadge] == 15){ //Constante ou ecrit en dur??
+  return true;
+}else{
+  return false;
+}

@@ -1,5 +1,5 @@
 /*login.php*/
-select *
+select username
 from User
 where username="toto" and pwd="otot"
 
@@ -13,14 +13,26 @@ from Card
 where id="42"
 
 /*getCards*/
-select id, count(*) as total
+select *
 from Card
+where id>=startId and id<startId+length
 
 /*getUser*/
-select *
+select username,mail,priority
 from User
 where id="42"
 
 /*addCard.php*/
 insert into Card(title,description,value,priority,date)
 values("monTitre","celien",0,0,getDate());
+
+/*voteCard*/
+update Card
+set value=newvalue ( + ou - 1)
+where id="42"
+
+/*getSticker*/
+select *
+from Sticker
+where id="42"
+
