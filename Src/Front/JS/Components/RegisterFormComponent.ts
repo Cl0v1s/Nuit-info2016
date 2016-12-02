@@ -23,6 +23,18 @@ class RegisterFormComponent extends Component
             return;
         }
         console.log(username+":"+password);
+        Model.GetInstance().register(username, password, (data) =>{
+            data = JSON.parse(data);
+            if(data.code == 200)
+            {
+                App.Token = username + ":" + password;
+                App.GoTo("cards");
+            }
+            else 
+            {
+                alert("An error occured, please retry.");
+            }
+        })
         //TODO: envoyer le formulaire 
     }
 

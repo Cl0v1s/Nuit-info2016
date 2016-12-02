@@ -35,7 +35,7 @@ class Model
      */
     public login(username : string, password: string, callback : Function) : void
     {
-        App.Get("login.php", {'username' : username, 'pwd' : password}, callback, App.Error);
+        App.Get("login.php?username="+username+"&pwd="+password, callback, App.Error);
     } 
 
     /**
@@ -51,7 +51,7 @@ class Model
      */
     public register(username : string, password : string, callback : Function) : void
     {
-
+        App.Get("register.php?username="+username+"&pwd="+password, callback, App.Error);
     }
     
     /**
