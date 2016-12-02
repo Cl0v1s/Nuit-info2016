@@ -2,6 +2,8 @@ class AddCardView extends View
 {
     public Show() : void 
     {
+        super.Show();
+
         let base : Component = new Component({
             body : ""
         });

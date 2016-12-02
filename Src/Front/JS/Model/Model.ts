@@ -10,7 +10,7 @@ class Model
     }
 
     private cards : Array<Card> = new Array<Card>();
-    private user : User;
+    public user : User;
 
     public User() : User
     {
@@ -75,15 +75,15 @@ class Model
      */
     public retrieveUser(id : number, callback : Function) : void 
     {
-
+        App.Get("getUser.php?id_user="+id, callback, App.Error);
     }
 
     /**
      * Envoie une nouvelle carte au serveur 
      */
-    public addCard(card : Card, callback : Function) : void
+    public addCard(title : string, link : string, text : string, callback : Function) : void
     {
-
+        App.Get("addCard.php?title="+title+"&link="+link+"&text="+text, callback, App.Error);
     }
 
     /**

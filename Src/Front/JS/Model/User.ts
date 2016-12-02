@@ -7,14 +7,14 @@ class User
 
     constructor(data : any)
     {
-        this.id = data.id;
+        this.id = data.id_user;
         this.username = data.username;
         this.priority = data.priority;
         this.stickers = new Array<Sticker>();
-        data.stickers.forEach((sticker) => {
+        /*data.stickers.forEach((sticker) => {
             let sti : Sticker = new Sticker(sticker);
             this.stickers.push(sti);
-        });
+        });*/
     }
 
     public Id() : number 
