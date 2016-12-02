@@ -13,7 +13,7 @@ $result = array(
     "code" => "",
     "content" => "");
 
-if (!isset($_SESSION["login"])) {
+if (!auth()) {
     $result["code"] = 401;
     $result["content"] = "You're not logged in";
     echo json_encode($result);

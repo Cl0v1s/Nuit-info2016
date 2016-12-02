@@ -23,14 +23,14 @@ $result = array(
     "code" => "",
     "content" => "");
 
-if ($ret != 0) {
+if ($ret == false) {
     $result["code"] = 500;
     $result["content"] = "Error while registering the user";
     echo json_encode($result);
     exit(1);
 }
 
-$idUser = $query->lastInsertId();
+$idUser = $pdo->lastInsertId();
 
 $result["code"] = 200;
 $result["content"] = $idUser;
