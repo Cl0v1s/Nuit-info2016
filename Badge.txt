@@ -1,0 +1,28 @@
+Need for badge :
+  Number of badge
+  Number of post
+  Number of up-vote on each post
+  Number of vote
+  Profile creation date
+
+Name badge  Action of badge
+
+Young     Create your profiles
+Member    One moth on app
+Elder     6 moths on app
+Wise      One year on app
+
+Beginner  Post a topic
+Involved  Post 10 topics
+Expert    Post 50 topics
+Senior    Post 100 topics
+
+Voter     Vote a topic 10 times
+Elector   Vote a topic 50 times
+
+Smart     One of yours topics have 5 up-vote
+Smarter   Five of yours topics have 10 up-vote
+Genius    One of yours topics have more than 75 up-vote
+
+Collector Have 5 badges
+Elite     Have all badges
