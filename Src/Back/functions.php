@@ -35,18 +35,17 @@ function getTextFromLink($url) {
 
 function auth() {
     $token = $_GET["token"];
-    $sql = "SELECT * FROM Users";
+    $sql = "SELECT id_user, pwd, username FROM Users";
     $pdo = getConnection();
     $query = $pdo->prepare($sql);
-    $query->execute();
-    $rows=$query->fetchAll();
-    for($i = 0; $i != count($rows); $i++)
+    $ret = $query->execute();
+    while( $row = $query->fetch())
     {
-        $psw = $rows[i]["pwd"];
-        $username = $rows[i]["username"];
+        $psw = $row["pwd"];
+        $username = $row["username"];
         $t = $username.":".$psw;
         if($t == $token) {
-            return $rows[$i];
+            return $row["id_user"];
         }
     }
     return false;
