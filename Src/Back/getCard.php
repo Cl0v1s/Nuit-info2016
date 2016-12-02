@@ -4,7 +4,7 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$cardId = $_GET["startId"];
+$cardId = $_GET["cardId"];
 
 $sql = "select * from Card where id=:cardId";
 $query = $pdo->prepare($sql);
