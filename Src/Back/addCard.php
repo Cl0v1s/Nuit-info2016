@@ -1,4 +1,5 @@
 <?php 
+header("Access-Control-Allow-Origin: *");
 session_start();
 
 require_once("functions.php");
@@ -7,6 +8,10 @@ $pdo = getConnection();
 $title = $_GET["title"];
 $link = $_GET["link"];
 $text = $_GET["text"];
+
+$result = array(
+    "code" => "",
+    "content" => "");
 
 if (!isset($_SESSION["login"])) {
     $result["code"] = 401;
@@ -23,28 +28,23 @@ if (empty($link)) {
     $description = getTextFromLink($link);
 }
 
-$sql = "insert into Card(title,description,value,priority,date) values(:title, :description, :priority, NOW())";
+$sql = "insert into Card(title,description,priority,date) values(:title, :description, :priority, NOW())";
 $query = $pdo->prepare($sql);
 
 $priority = "IMPORTANT"; // TODO set value
 $query->bindValue (':title', $title);
 $query->bindValue(":description", $description);
 $query->bindValue(":priority", $priority);
-
 $ret = $query->execute();
 
-$result = array(
-    "code" => "",
-    "content" => "");
-
-if ($ret != 0) {
+if ($ret != true) {
     $result["code"] = 500;
     $result["content"] = "Error while adding a card";
     echo json_encode($result);
     exit(1);
 }
 
-$idCard = $query->lastInsertId();
+$idCard = PDO::lastInsertId();
 
 $result["code"] = 200;
 $result["content"] = $idCard;
