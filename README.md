@@ -2,6 +2,12 @@
 
 Ce repo contient le code produit par l'équipe "char ibout;" à l'occasion de la Nuit de l'info édition 2016
 
+## Concept
+
+Reddifugee se veux être un agrégateur d'informations. Les personnes concernées peuvent communiquer des cartes contenant des informations utiles, et les utilisateurs inscrits peuvent voter pour ou contre un carte en fonction de sa pertinence, afin de la faire monter ou descendre dans le fil d'information.
+
+En réalisants différentes actions, les utilisateurs peuvent obtenir des pages, preuves de leur influence dans la communauté et de la pertinence de leurs informations.
+
 ## Challenges 
 
 - [x] [404: perdu dans un décor innatendu](http://www.nuitdelinfo.com/n2i/defis/100)
