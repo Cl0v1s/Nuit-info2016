@@ -16,7 +16,9 @@ class LoginFormComponent extends Component
         let username : string = (<HTMLInputElement>this.GetDOM().querySelector("input[name='username']")).value;
         let password : string = (<HTMLInputElement>this.GetDOM().querySelector("input[name='password']")).value;
         console.log(username+":"+password);
-        //TODO: envoyer le formulaire 
+        Model.GetInstance().login(username, password, (data) => {
+            console.log(data);
+        });
     }
 
     public Mount(parent : Component) : void

@@ -99,6 +99,7 @@ class Model {
      * Permet la connexion d'un user
      */
     login(username, password, callback) {
+        App.Get("login.php", { 'username': username, 'pwd': password }, callback, App.Error);
     }
     /**
      * Permet à l'utilisateur connecté de se déconnecter
@@ -379,7 +380,9 @@ class LoginFormComponent extends Component {
         let username = this.GetDOM().querySelector("input[name='username']").value;
         let password = this.GetDOM().querySelector("input[name='password']").value;
         console.log(username + ":" + password);
-        //TODO: envoyer le formulaire 
+        Model.GetInstance().login(username, password, (data) => {
+            console.log(data);
+        });
     }
     Mount(parent) {
         super.Mount(parent, null);
@@ -648,7 +651,7 @@ class App {
             new AddCardView().Show();
         });
         Linker.GetInstance().AddLink(Link_Special.Default, () => {
-            new CardsView().Show();
+            new LoginView().Show();
         });
         Linker.GetInstance().Analyze(); // Une fois qu'on a chargé la langue on analise l'URL
     }
@@ -666,23 +669,28 @@ class App {
     /**
      * Envoie des requetes Ajax GET
      */
-    static Get(url, callback, error) {
+    static Get(url, params, callback, error) {
+        url = App.EndPoint + url;
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            // TODO: récupérer le cookie session_id
             callback(xhttp.responseText.trim());
         };
         xhttp.onerror = function () {
             if (error != null)
                 error();
         };
-        // TODO: ajouter le cookie session_id 
+        if (App.First == false) {
+            xhttp.withCredentials = true;
+            console.log("ok");
+        }
+        App.First = false;
         xhttp.open("GET", url, true);
         console.log("Processing " + url);
-        xhttp.send();
+        xhttp.send(params);
     }
 }
 App.Debug = true;
-App.EndPoint = "http://172.17.0.2/rest/api";
+App.First = true;
+App.EndPoint = "http://167.114.253.175/nuitinfo/Src/Back/";
 window.onload = App.Main;
 //# sourceMappingURL=main.js.map

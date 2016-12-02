@@ -9,8 +9,8 @@ $result = array(
 require_once("functions.php");
 $pdo = getConnection();
 
-$username = $_GET["username"];
-$password = $_GET["pwd"];
+$username = $_POST["username"];
+$password = $_POST["pwd"];
 
 $sql = "SELECT id_user from Users where username=:username and pwd=:password";
 $query = $pdo->prepare($sql);

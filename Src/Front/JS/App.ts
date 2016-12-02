@@ -2,7 +2,6 @@ class App
 {
     public static Debug : boolean = true;
 
-
     public static EndPoint : string = "http://167.114.253.175/nuitinfo/Src/Back/";
 
     public static Main()
@@ -22,7 +21,7 @@ class App
             new AddCardView().Show();
         });
         Linker.GetInstance().AddLink(Link_Special.Default, () => {
-            new CardsView().Show();
+            new LoginView().Show();
         });
         
 
@@ -49,11 +48,11 @@ class App
     /**
      * Envoie des requetes Ajax GET
      */
-    public static Get(url : string, callback : Function, error? : Function) : void
+    public static Get(url : string, params : any, callback : Function, error? : Function) : void
     {
+        url = App.EndPoint + url;
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
-            // TODO: récupérer le cookie session_id
             callback(xhttp.responseText.trim());
         };
         xhttp.onerror = function()
@@ -61,10 +60,10 @@ class App
             if(error != null)
                 error();
         }
-        // TODO: ajouter le cookie session_id 
+        
         xhttp.open("GET", url, true);
         console.log("Processing "+url);
-        xhttp.send();
+        xhttp.send(params);
 
 }
 }

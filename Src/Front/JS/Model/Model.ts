@@ -35,7 +35,7 @@ class Model
      */
     public login(username : string, password: string, callback : Function) : void
     {
-
+        App.Get("login.php", {'username' : username, 'pwd' : password}, callback, App.Error);
     } 
 
     /**
