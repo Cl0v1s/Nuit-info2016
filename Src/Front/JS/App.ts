@@ -3,7 +3,7 @@ class App
     public static Debug : boolean = true;
 
 
-    public static EndPoint : string = "http://172.17.0.2/rest/api";
+    public static EndPoint : string = "http://167.114.253.175/nuitinfo/Src/Back/";
 
     public static Main()
     {
