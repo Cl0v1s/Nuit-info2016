@@ -29,7 +29,5 @@ if ($row == false) {
 $idUser = $row["id_user"];
 
 $result["code"] = 200;
-$result["content"] = "Ok";
-
-$_SESSION["login"] = $idUser;
+$result["content"] = $idUser;
 echo json_encode($result);
