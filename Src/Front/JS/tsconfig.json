@@ -15,6 +15,7 @@
         "Components/AddCardFormComponent.ts",
         "Components/RegisterFormComponent.ts",
         "Components/HeaderComponent.ts",
+        "Components/MenuComponent.ts",
         "Components/StickerComponent.ts",
         "Components/LoginFormComponent.ts",
         "Components/CardComponent.ts",

@@ -6,7 +6,6 @@ class HeaderComponent extends Component
     {
         super({
             body: "\
-                <input type='button' name='menu' value='menu'>\
                 <div>\
                     {{title}}\
                 </div>\
@@ -31,7 +30,6 @@ class HeaderComponent extends Component
     public Mount(parent : Component) : void
     {
         super.Mount(parent, {title : this.title});
-        this.GetDOM().querySelector("input[name='menu']").addEventListener("click", () => {this.Menu();} );
         this.GetDOM().querySelector("input[name='profile']").addEventListener("click", () => {this.Profile();} );
 
     }

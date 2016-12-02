@@ -22,7 +22,7 @@ class App
             new AddCardView().Show();
         });
         Linker.GetInstance().AddLink(Link_Special.Default, () => {
-            new LoginView().Show();
+            new CardsView().Show();
         });
         
 

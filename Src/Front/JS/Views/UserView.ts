@@ -15,6 +15,8 @@ class UserView extends View
         });
         this.Add(base).Mount(null, null);
 
+
+        this.Add(new MenuComponent()).Mount(base);
         this.Add(new HeaderComponent("Profile")).Mount(base);
 
         this.Add(new Component({
