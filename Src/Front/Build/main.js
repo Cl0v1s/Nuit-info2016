@@ -99,7 +99,7 @@ class Model {
      * Permet la connexion d'un user
      */
     login(username, password, callback) {
-        App.Get("login.php", { 'username': username, 'pwd': password }, callback, App.Error);
+        App.Get("login.php?username=" + username + "&pwd=" + password, callback, App.Error);
     }
     /**
      * Permet à l'utilisateur connecté de se déconnecter
@@ -379,9 +379,15 @@ class LoginFormComponent extends Component {
     Send() {
         let username = this.GetDOM().querySelector("input[name='username']").value;
         let password = this.GetDOM().querySelector("input[name='password']").value;
-        console.log(username + ":" + password);
         Model.GetInstance().login(username, password, (data) => {
-            console.log(data);
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                App.Token = username + ":" + password;
+                App.GoTo("cards");
+            }
+            else {
+                alert("Invalid credentials. Please retry.");
+            }
         });
     }
     Mount(parent) {
@@ -669,8 +675,8 @@ class App {
     /**
      * Envoie des requetes Ajax GET
      */
-    static Get(url, params, callback, error) {
-        url = App.EndPoint + url;
+    static Get(url, callback, error) {
+        url = App.EndPoint + url + "&token=" + App.Token;
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
             callback(xhttp.responseText.trim());
@@ -679,18 +685,13 @@ class App {
             if (error != null)
                 error();
         };
-        if (App.First == false) {
-            xhttp.withCredentials = true;
-            console.log("ok");
-        }
-        App.First = false;
         xhttp.open("GET", url, true);
         console.log("Processing " + url);
-        xhttp.send(params);
+        xhttp.send();
     }
 }
 App.Debug = true;
-App.First = true;
+App.Token = null;
 App.EndPoint = "http://167.114.253.175/nuitinfo/Src/Back/";
 window.onload = App.Main;
 //# sourceMappingURL=main.js.map

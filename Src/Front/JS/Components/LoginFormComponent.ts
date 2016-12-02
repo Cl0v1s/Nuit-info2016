@@ -15,9 +15,16 @@ class LoginFormComponent extends Component
     {
         let username : string = (<HTMLInputElement>this.GetDOM().querySelector("input[name='username']")).value;
         let password : string = (<HTMLInputElement>this.GetDOM().querySelector("input[name='password']")).value;
-        console.log(username+":"+password);
         Model.GetInstance().login(username, password, (data) => {
-            console.log(data);
+            data = JSON.parse(data);
+            if(data.code == 200)
+            {
+                App.Token = username + ":" + password;
+                App.GoTo("cards");
+            }
+            else{
+                alert("Invalid credentials. Please retry.");
+            }
         });
     }
 

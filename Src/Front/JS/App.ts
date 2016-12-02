@@ -2,6 +2,7 @@ class App
 {
     public static Debug : boolean = true;
 
+    public static Token : string  = null;
     public static EndPoint : string = "http://167.114.253.175/nuitinfo/Src/Back/";
 
     public static Main()
@@ -48,9 +49,9 @@ class App
     /**
      * Envoie des requetes Ajax GET
      */
-    public static Get(url : string, params : any, callback : Function, error? : Function) : void
+    public static Get(url : string,  callback : Function, error? : Function) : void
     {
-        url = App.EndPoint + url;
+        url = App.EndPoint + url + "&token="+App.Token;
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             callback(xhttp.responseText.trim());
@@ -63,9 +64,10 @@ class App
         
         xhttp.open("GET", url, true);
         console.log("Processing "+url);
-        xhttp.send(params);
+        xhttp.send();
 
-}
+    }
+    
 }
 
 window.onload =  App.Main;
