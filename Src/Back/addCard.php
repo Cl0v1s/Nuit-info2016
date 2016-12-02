@@ -50,3 +50,4 @@ $result["code"] = 200;
 $result["content"] = $idCard;
 
 echo json_encode($result);
+ 

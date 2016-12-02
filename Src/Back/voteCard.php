@@ -23,7 +23,7 @@ $query = $pdo->prepare($sql);
 $priority = "IMPORTANT"; // TODO set value
 $query->bindValue (':user_id', $idUser);
 $query->bindValue(":card_id", $cardId);
-$query->bindValue(":value", $upVote ? "+1" : "-1");
+$query->bindValue(":value", $upVote ? "1" : "-1");
 
 $ret = $query->execute();
 
@@ -31,7 +31,7 @@ $result = array(
     "code" => "",
     "content" => "");
 
-if ($ret != 0) {
+if ($ret != true) {
     $result["code"] = 500;
     $result["content"] = "Error while adding a card";
     echo json_encode($result);
