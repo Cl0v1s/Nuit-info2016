@@ -9,12 +9,27 @@ class App
     {
 
         // Création des liens et des actions associées
-        /*
-        Linker.GetInstance().AddLink(Link_Special.Default, showHome);
-        */
+        Linker.GetInstance().AddLink("login", () => {
+            new LoginView().Show();
+        });
+        Linker.GetInstance().AddLink("register", () => {
+            new RegisterView().Show();
+        });
+        Linker.GetInstance().AddLink("cards", () => {
+            new CardsView().Show();
+        });
+        Linker.GetInstance().AddLink(Link_Special.Default, () => {
+            new LoginView().Show();
+        });
+        
 
 
         Linker.GetInstance().Analyze(); // Une fois qu'on a chargé la langue on analise l'URL
+    }
+
+    public static GoTo(link : string) : void 
+    {
+        window.location.replace("index.html?"+link);
     }
 
     public static Error(e : Error) : void

@@ -11,7 +11,16 @@
         "Model/User.ts",
         "Model/Model.ts",
         "Components/Component.ts", 
+        "Components/ButtonComponent.ts", 
+        "Components/RegisterFormComponent.ts",
+        "Components/LoginFormComponent.ts",
+        "Components/CardComponent.ts",
         "Views/View.ts",
+        "Views/LoginView.ts",
+        "Views/RegisterView.ts",
+        "Views/CardsView.ts",
+        "Views/AddCardView.ts",
+        "Views/UserView.ts",
         "Link.ts",
         "App.ts"
     ]

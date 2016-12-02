@@ -9,8 +9,22 @@ class Model
         return Model.Instance;
     }
 
-    private cards : Array<Card>;
+    private cards : Array<Card> = new Array<Card>();
     private user : User;
+
+
+    public Cards() : Array<Card>
+    {
+        return this.cards;
+    }
+
+    /**
+     * Retourne length cartes depuis startid
+     */
+    public GetCardsBetween(startid : number, length : number) : Array<Card>
+    {
+        return this.cards;
+    }
 
     /**
      * Permet la connexion d'un user
