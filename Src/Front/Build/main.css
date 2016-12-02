@@ -36,6 +36,57 @@ p {
 
 }
 
+/* Menu */
+.MenuComponent
+{
+  position: absolute;
+  top: 0;
+  left: -380px !important;
+  width: 500px;
+  z-index: 1;
+  background-color: #1b1d1c;
+  border-right: 1px solid #f56233;
+  height: 100%;
+  transition: all 0.5s ease;
+}
+
+.MenuComponent.open
+{
+  left: 0 !important;
+}
+
+.MenuComponent img
+{
+  width: 70%;
+  height: 70px;
+}
+
+.MenuComponent>input
+{
+  display: inline-block;
+  width: 25% !important;
+  height: 70px;
+  background-color: rgba(0,0,0,0) !important;
+  border: 0 !important;
+  color: rgba(0,0,0,0);
+ background-image: url("Assets/menu.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center -10px; 
+}
+
+.MenuComponent div
+{
+  text-align: left;
+}
+
+.MenuComponent div input
+{
+  margin-left: 5%;
+  width: 70%;
+  
+}
+
 
 
 /* header */
@@ -71,6 +122,10 @@ p {
   border: 0 !important;
   position: relative;
   top: -10px;
+  background-color: rgba(0,0,0,0) !important;
+  color: rgba(0,0,0,0);
+  background-image: url("Assets/profile.png");
+  background-size: contain;
 }
 
 /* Connexion */
@@ -98,13 +153,32 @@ text-align: center;
 /** Cards **/
 .CardsView
 {
-  
+  margin-top: 90px;
+  text-align: center;
+}
+
+.UserView
+{
+  margin-top: 90px;
+  text-align: center;
+}
+
+/** AddCard **/
+.AddCardFormComponent
+{
+  margin-top: 90px;
+  text-align: center;
+}
+
+.AddCardFormComponent input
+{
+  display: inline-block;
 }
 
 
 /* Champ de saisie - Connexion */
 
-.txtarea, input[type='text'], input[type='password'] {
+textarea, input[type='text'], input[type='password'] {
   box-sizing: padding-box;
   border: none;
   font-size:1em;

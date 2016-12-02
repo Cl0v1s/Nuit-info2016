@@ -16,15 +16,9 @@ class HeaderComponent extends Component
     }
 
 
-    public Menu() : void 
-    {
-        console.log("menu");
-    }
-
     public Profile() : void 
     {
-        console.log("profile");
-        //App.GoTo("user")
+        new UserView(Model.GetInstance().User()).Show();
     }
 
     public Mount(parent : Component) : void

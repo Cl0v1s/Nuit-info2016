@@ -52,14 +52,14 @@ class Sticker {
 }
 class User {
     constructor(data) {
-        this.id = data.id;
+        this.id = data.id_user;
         this.username = data.username;
         this.priority = data.priority;
         this.stickers = new Array();
-        data.stickers.forEach((sticker) => {
-            let sti = new Sticker(sticker);
+        /*data.stickers.forEach((sticker) => {
+            let sti : Sticker = new Sticker(sticker);
             this.stickers.push(sti);
-        });
+        });*/
     }
     Id() {
         return this.id;
@@ -126,11 +126,13 @@ class Model {
      * Récupère le profile d'une utilisateur
      */
     retrieveUser(id, callback) {
+        App.Get("getUser.php?id_user=" + id, callback, App.Error);
     }
     /**
      * Envoie une nouvelle carte au serveur
      */
-    addCard(card, callback) {
+    addCard(title, link, text, callback) {
+        App.Get("addCard.php?title=" + title + "&link=" + link + "&text=" + text, callback, App.Error);
     }
     /**
      * Permet de voter pour une carte
@@ -238,11 +240,11 @@ class AddCardFormComponent extends Component {
     constructor() {
         super({
             body: "\
-                <input type='text' name='title' placeholder='title'>\
-                <input type='text' name='link' placeholder='Link'>\
-                Or\
-                <textarea placeholder='content' name='content'></textarea>\
-                <input type='button' name='submit' value='Send this card'>\
+                <input type='text' name='title' placeholder='title'><br>\
+                <input type='text' name='link' placeholder='Link'><br>\
+                Or<br>\
+                <textarea placeholder='content' name='content'></textarea><br>\
+                <input type='button' name='submit' value='Send this card'><br>\
                 <input type='button' name='cancel' value='Cancel'>\
                 "
         });
@@ -251,11 +253,26 @@ class AddCardFormComponent extends Component {
         let title = this.GetDOM().querySelector("input[name='title']").value;
         let link = this.GetDOM().querySelector("input[name='link']").value;
         let content = this.GetDOM().querySelector("textarea[name='content']").value;
-        console.log(title + ":" + link + ":" + content);
-        //TODO: envoyer le formulaire 
+        if (title.length == 0 || title.indexOf(" ") != -1) {
+            alert("title incorrect.");
+            return;
+        }
+        if (link.length == 0 && content.length == 0) {
+            alert("You must set link or content.");
+            return;
+        }
+        Model.GetInstance().addCard(title, link, content, (data) => {
+            data = JSON.parse(data);
+            if (data.code == 200) {
+                new CardsView().Show();
+            }
+            else {
+                alert("An error occured.");
+            }
+        });
     }
     Cancel() {
-        App.GoTo(Link_Special.Default);
+        new CardsView().Show();
     }
     Mount(parent) {
         super.Mount(parent, null);
@@ -313,12 +330,8 @@ class HeaderComponent extends Component {
         });
         this.title = title;
     }
-    Menu() {
-        console.log("menu");
-    }
     Profile() {
-        console.log("profile");
-        //App.GoTo("user")
+        new UserView(Model.GetInstance().User()).Show();
     }
     Mount(parent) {
         super.Mount(parent, { title: this.title });
@@ -335,20 +348,27 @@ class MenuComponent extends Component {
                     <input type='button' value='Cards' name='cards'>\
                     <input type='button' value='Add a Card' name='add-card'>\
                 </div>\
-                <div>\
-                    copyright\
-                </div>\
             "
         });
+        this.open = false;
+    }
+    Open() {
+        this.open = !this.open;
+        if (this.open)
+            this.GetDOM().className += " open";
+        else
+            this.GetDOM().className = this.origin;
     }
     Cards() {
-        App.GoTo("cards");
+        new CardsView().Show();
     }
     AddCard() {
-        App.GoTo("addcard");
+        new AddCardView().Show();
     }
     Mount(parent) {
         super.Mount(parent, null);
+        this.origin = this.GetDOM().className;
+        this.GetDOM().querySelector("input[name='menu']").addEventListener("click", () => { this.Open(); });
         this.GetDOM().querySelector("input[name='cards']").addEventListener("click", () => { this.Cards(); });
         this.GetDOM().querySelector("input[name='add-card']").addEventListener("click", () => { this.AddCard(); });
     }
@@ -394,7 +414,16 @@ class LoginFormComponent extends Component {
             data = JSON.parse(data);
             if (data.code == 200) {
                 App.Token = username + ":" + password;
-                App.GoTo("cards");
+                Model.GetInstance().retrieveUser(parseInt(data.content), (data) => {
+                    data = JSON.parse(data);
+                    if (data.code == 200) {
+                        Model.GetInstance().user = new User(data.content);
+                        new CardsView().Show();
+                    }
+                    else {
+                        alert("An error occured.");
+                    }
+                });
             }
             else {
                 alert("Invalid credentials. Please retry.");
@@ -553,6 +582,7 @@ class CardsView extends View {
 }
 class AddCardView extends View {
     Show() {
+        super.Show();
         let base = new Component({
             body: ""
         });
@@ -568,8 +598,9 @@ class UserView extends View {
         this.user = user;
     }
     Show() {
+        super.Show();
         let base = new Component({
-            body: ""
+            body: "", classes: "UserView"
         });
         this.Add(base).Mount(null, null);
         this.Add(new MenuComponent()).Mount(base);

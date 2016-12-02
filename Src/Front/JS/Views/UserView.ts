@@ -10,8 +10,10 @@ class UserView extends View
 
     public Show() : void 
     {
+        super.Show();
+
         let base : Component = new Component({
-            body : ""
+            body : "", classes: "UserView"
         });
         this.Add(base).Mount(null, null);
 

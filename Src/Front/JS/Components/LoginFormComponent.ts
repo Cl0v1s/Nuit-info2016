@@ -20,7 +20,18 @@ class LoginFormComponent extends Component
             if(data.code == 200)
             {
                 App.Token = username + ":" + password;
-                App.GoTo("cards");
+                Model.GetInstance().retrieveUser(parseInt(data.content), (data) => {
+                    data = JSON.parse(data);
+                    if(data.code == 200)
+                    {
+                        Model.GetInstance().user = new User(data.content);
+                        new CardsView().Show();
+                    }
+                    else 
+                    {
+                        alert("An error occured.");
+                    }
+                });
             }
             else{
                 alert("Invalid credentials. Please retry.");
