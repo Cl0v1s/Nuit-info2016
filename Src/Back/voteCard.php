@@ -4,8 +4,8 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$cardId = $_POST["cardId"];
-$upVote = $_POST["upVote"];
+$cardId = $_GET["cardId"];
+$upVote = $_GET["upVote"];
 
 if (!isset($_SESSION["login"])) {
     $result["code"] = 401;

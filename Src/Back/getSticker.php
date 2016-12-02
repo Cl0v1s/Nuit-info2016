@@ -5,7 +5,7 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$sticker_id = $_POST["stickerId"];
+$sticker_id = $_GET["stickerId"];
 
 $sql = "SELECT * FROM Sticker where id=:sticker_id";
 $query = $pdo->prepare($sql);

@@ -4,9 +4,9 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$username = $_POST["username"];
-$password = $_POST["pwd"];
-$mail = $_POST["mail"];
+$username = $_GET["username"];
+$password = $_GET["pwd"];
+$mail = $_GET["mail"];
 $priority = "IMPORTANT";
 
 $sql = "insert into User(username,pwd,mail,priority,date_creation) values(:username,:password, :mail, :priority , NOW())";

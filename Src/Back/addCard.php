@@ -4,9 +4,9 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$title = $_POST["title"];
-$link = $_POST["link"];
-$text = $_POST["text"];
+$title = $_GET["title"];
+$link = $_GET["link"];
+$text = $_GET["text"];
 
 if (!isset($_SESSION["login"])) {
     $result["code"] = 401;

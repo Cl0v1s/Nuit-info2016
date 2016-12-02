@@ -5,8 +5,8 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$startId = $_POST["startId"];
-$length = $_POST["length"];
+$startId = $_GET["startId"];
+$length = $_GET["length"];
 
 $sql = "select * from Card where id>=:startId and id<:startId+:length";
 

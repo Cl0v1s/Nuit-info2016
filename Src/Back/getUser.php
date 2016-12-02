@@ -5,7 +5,7 @@ session_start();
 require_once("functions.php");
 $pdo = getConnection();
 
-$userId = $_POST["userId"];
+$userId = $_GET["userId"];
 
 $sql = "SELECT username,mail,priority,date_creation,id_user FROM User where id=:userId";
 $query = $pdo->prepare($sql);
