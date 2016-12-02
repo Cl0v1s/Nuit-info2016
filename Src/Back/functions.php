@@ -21,17 +21,6 @@ function getConnection() {
     return $pdo;
 }
 
-function query($pdo, $sql, $data = array()) {
-    $req = $pdo->prepare($sql);
-    $req->execute($data);
-    return ($req->fetchAll(PDO::FETCH_OBJ));   //PDO::FETCH_ASSOC
-}
-
-function insert($pdo, $sql, $data = array()) {
-    $req = $pdo->prepare($sql);
-    $req->execute($data);
-}
-
 function getTextFromLink($url) {
     $html = file_get_contents($url);
     libxml_use_internal_errors(true); //Prevents Warnings, remove if desired
@@ -42,4 +31,23 @@ function getTextFromLink($url) {
         $body .= $dom->saveHTML($child);
     }
     return $body;
+}
+
+function auth() {
+    $token = $_GET["token"];
+    $sql = "SELECT * FROM Users";
+    $pdo = getConnection();
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $rows=$query->fetchAll();
+    for($i = 0; $i != count($rows); $i++)
+    {
+        $psw = $rows[i]["pwd"];
+        $username = $rows[i]["username"];
+        $t = $username.":".$psw;
+        if($t == $token) {
+            return $rows[$i];
+        }
+    }
+    return false;
 }
