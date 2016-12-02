@@ -8,7 +8,7 @@ $pdo = getConnection();
 $startId = $_GET["startId"];
 $length = $_GET["length"];
 
-$sql = "select * from Card where id>=:startId and id<:startId+:length";
+$sql = "select * from Card where id_card>=:startId and id_card<:startId+:length";
 
 $query = $pdo->prepare($sql);
 $query->bindValue (':startId', $startId);
@@ -22,11 +22,11 @@ $result = array(
 
 while ($row = $query->fetch()) {
     $cards[] = array(
-        "id_card" => $row->id_card,
-        "description" => $row->description,
-        "title" => $row->title,
-        "date" => $row->date,
-        "priority" => $row->priority
+        "id_card" => $row["id_card"],
+        "description" => $row["description"],
+        "title" => $row["title"],
+        "date" => $row["date"],
+        "priority" => $row["priority"]
     );
 }
 
