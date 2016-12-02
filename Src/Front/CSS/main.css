@@ -96,7 +96,11 @@ button:disabled {
   width: 100%;
   margin-top: 1.5em;
 }
-
+.menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 .menu_open {
   background-color: black;
   width: 50%;
@@ -123,4 +127,24 @@ button:disabled {
 
 .menu ul li{
   border-top: 1px solid #f56233;
+}
+
+.card {
+  background-color: #343835;
+  margin-left: 5%;
+  width: 90%;
+  max-height: 150px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  margin: 0px 1%;
+  font-size: 1em;
+  border-bottom: 1px solid #f56233;
+}
+
+.card_content {
+  font-size: 0.5em;
+  padding: 5px;
 }
