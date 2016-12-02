@@ -83,6 +83,9 @@ class Model {
             Model.Instance = new Model();
         return Model.Instance;
     }
+    User() {
+        return this.user;
+    }
     Cards() {
         return this.cards;
     }
@@ -229,6 +232,35 @@ class ButtonComponent extends Component {
         this.GetDOM().querySelector("input[name='btn']").addEventListener("click", () => { this.callback(); });
     }
 }
+class AddCardFormComponent extends Component {
+    constructor() {
+        super({
+            body: "\
+                <input type='text' name='title' placeholder='title'>\
+                <input type='text' name='link' placeholder='Link'>\
+                Or\
+                <textarea placeholder='content' name='content'></textarea>\
+                <input type='button' name='submit' value='Send this card'>\
+                <input type='button' name='cancel' value='Cancel'>\
+                "
+        });
+    }
+    Send() {
+        let title = this.GetDOM().querySelector("input[name='title']").value;
+        let link = this.GetDOM().querySelector("input[name='link']").value;
+        let content = this.GetDOM().querySelector("textarea[name='content']").value;
+        console.log(title + ":" + link + ":" + content);
+        //TODO: envoyer le formulaire 
+    }
+    Cancel() {
+        App.GoTo(Link_Special.Default);
+    }
+    Mount(parent) {
+        super.Mount(parent, null);
+        this.GetDOM().querySelector("input[name='submit']").addEventListener("click", () => { this.Send(); });
+        this.GetDOM().querySelector("input[name='cancel']").addEventListener("click", () => { this.Cancel(); });
+    }
+}
 class RegisterFormComponent extends Component {
     constructor() {
         super({
@@ -255,6 +287,56 @@ class RegisterFormComponent extends Component {
         super.Mount(parent, null);
         let self = this;
         this.GetDOM().querySelector("input[name='submit']").addEventListener("click", () => { self.Send(); });
+    }
+}
+class HeaderComponent extends Component {
+    constructor(title) {
+        super({
+            body: "\
+                <input type='button' name='menu' value='menu'>\
+                <div>\
+                    {{title}}\
+                </div>\
+                <input type='button' name='profile' value='profile'>\
+                "
+        });
+        this.title = title;
+    }
+    Menu() {
+        console.log("menu");
+    }
+    Profile() {
+        console.log("profile");
+        //App.GoTo("user")
+    }
+    Mount(parent) {
+        super.Mount(parent, { title: this.title });
+        this.GetDOM().querySelector("input[name='menu']").addEventListener("click", () => { this.Menu(); });
+        this.GetDOM().querySelector("input[name='profile']").addEventListener("click", () => { this.Profile(); });
+    }
+}
+class StickerComponent extends Component {
+    constructor(sticker) {
+        super({
+            body: "\
+                <img src='{{logo}}'>\
+                <div>\
+                    {{title}}\
+                </div>\
+                <div>\
+                    {{description}}\
+                </div>\
+                "
+        });
+        this.sticker = sticker;
+    }
+    Mount(parent) {
+        let opts = {
+            logo: this.sticker.Logo(),
+            title: this.sticker.Title(),
+            description: this.sticker.Description()
+        };
+        super.Mount(parent, opts);
     }
 }
 class LoginFormComponent extends Component {
@@ -408,6 +490,7 @@ class CardsView extends View {
             body: ""
         });
         this.Add(base).Mount(null, null);
+        this.Add(new HeaderComponent("Cards")).Mount(base);
         this.cardsList = new Component({
             body: ""
         });
@@ -419,6 +502,37 @@ class CardsView extends View {
         this.Add(new ButtonComponent("Load More Cards", () => {
             this.LoadMore();
         })).Mount(base);
+    }
+}
+class AddCardView extends View {
+    Show() {
+        let base = new Component({
+            body: ""
+        });
+        this.Add(base).Mount(null, null);
+        this.Add(new AddCardFormComponent()).Mount(base);
+    }
+}
+class UserView extends View {
+    constructor(user) {
+        super();
+        this.user = user;
+    }
+    Show() {
+        let base = new Component({
+            body: ""
+        });
+        this.Add(base).Mount(null, null);
+        this.Add(new Component({
+            body: "<div>{{username}}</div>"
+        })).Mount(base, { username: this.user.Username() });
+        let stickerList = new Component({
+            body: ""
+        });
+        this.Add(stickerList).Mount(base, null);
+        this.user.Stickers().forEach((sticker) => {
+            this.Add(new StickerComponent(sticker)).Mount(stickerList);
+        });
     }
 }
 var Link_Special = {
@@ -499,8 +613,11 @@ class App {
         Linker.GetInstance().AddLink("cards", () => {
             new CardsView().Show();
         });
+        Linker.GetInstance().AddLink("addcard", () => {
+            new AddCardView().Show();
+        });
         Linker.GetInstance().AddLink(Link_Special.Default, () => {
-            new LoginView().Show();
+            new CardsView().Show();
         });
         Linker.GetInstance().Analyze(); // Une fois qu'on a chargé la langue on analise l'URL
     }

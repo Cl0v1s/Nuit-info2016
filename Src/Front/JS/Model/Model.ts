@@ -12,6 +12,10 @@ class Model
     private cards : Array<Card> = new Array<Card>();
     private user : User;
 
+    public User() : User
+    {
+        return this.user;
+    }
 
     public Cards() : Array<Card>
     {

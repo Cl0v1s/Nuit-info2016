@@ -25,6 +25,8 @@ class CardsView extends View
         });
         this.Add(base).Mount(null, null);
 
+        this.Add(new HeaderComponent("Cards")).Mount(base);
+
         this.cardsList = new Component({
             body : ""
         });

@@ -18,6 +18,9 @@ class App
         Linker.GetInstance().AddLink("cards", () => {
             new CardsView().Show();
         });
+        Linker.GetInstance().AddLink("addcard", () => {
+            new AddCardView().Show();
+        });
         Linker.GetInstance().AddLink(Link_Special.Default, () => {
             new LoginView().Show();
         });
