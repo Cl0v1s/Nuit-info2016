@@ -13,14 +13,14 @@ $result = array(
     "code" => "",
     "content" => "");
 
-if (!auth()) {
+if (auth() === false) {
     $result["code"] = 401;
     $result["content"] = "You're not logged in";
     echo json_encode($result);
     exit(1);
 }
 
-$idUser = $_SESSION["login"];
+$idUser = auth();
 
 if (empty($link)) {
     $description = $text;
@@ -44,7 +44,7 @@ if ($ret != true) {
     exit(1);
 }
 
-$idCard = PDO::lastInsertId();
+$idCard = $pdo->lastInsertId();
 
 $result["code"] = 200;
 $result["content"] = $idCard;

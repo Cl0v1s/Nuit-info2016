@@ -8,14 +8,14 @@ $pdo = getConnection();
 $cardId = $_GET["cardId"];
 $upVote = $_GET["upVote"];
 
-if (!auth()) {
+if (auth() === false) {
     $result["code"] = 401;
     $result["content"] = "You're not logged in";
     echo json_encode($result);
     exit(1);
 }
 
-$idUser = $_SESSION["login"];
+$idUser = auth();
 
 $sql = "update Card set value=value+:value where user_id=:user_id AND card_id=:card_id";
 $query = $pdo->prepare($sql);
