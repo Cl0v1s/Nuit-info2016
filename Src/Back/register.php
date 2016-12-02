@@ -10,11 +10,12 @@ $password = $_GET["pwd"];
 $mail = $_GET["mail"];
 $priority = "IMPORTANT";
 
-$sql = "insert into User(username,pwd,mail,priority,date_creation) values(:username,:password, :mail, :priority , NOW())";
+$sql = "insert into Users(username,pwd,mail,priority,date_creation) values(:username,:password, :mail, :priority , NOW())";
 $query = $pdo->prepare($sql);
 $query->bindValue (':username', $username);
 $query->bindValue(":password", $password);
 $query->bindValue(":mail", $mail);
+$query->bindValue(":priority", $priority);
 
 $ret = $query->execute();
 
